@@ -19,10 +19,17 @@ public class ChristmasMessage {
 
     @Getter
     @Setter
-    @Column(name="CHILD_ID")
+    @Column(name="EXT_CHILD_ID")
     // the child ID the wish is for. No Child data is stored by this application but retrieved from the child app
     // as can be seen in the system architecture diagram
-    private String childID;
+    private String extChildID;
+
+    @Getter
+    @Setter
+    @Column(name="EXTERNAL_ID")
+    // external ID of the origin system
+    private String externalId;
+
 
     @Getter
     @Setter

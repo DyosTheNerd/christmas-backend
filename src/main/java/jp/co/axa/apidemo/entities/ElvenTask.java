@@ -15,20 +15,23 @@ public class ElvenTask {
     @Setter
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Getter
     @Setter
-    @Id
     private TaskType taskType;
 
     @Getter
     @Setter
-    @Id
     private TaskStatus taskStatus;
 
+    @Getter
+    @Setter
+    private Employee resolvedBy;
 
-
+    @Getter
+    @Setter
+    private String linkedObjectID;
 
 
 }
