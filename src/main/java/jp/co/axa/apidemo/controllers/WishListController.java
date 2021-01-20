@@ -1,7 +1,10 @@
 package jp.co.axa.apidemo.controllers;
 
 import com.lowagie.text.DocumentException;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +16,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -27,7 +28,7 @@ public class WishListController {
 
 
     @GetMapping("/wishlist/{wishlistID}/document")
-    public void getWishListPDF(@PathVariable(name="wishlistID")Long employeeId, HttpServletResponse response) {
+    public ResponseEntity getWishListPDF(@PathVariable(name="wishlistID")Long employeeId, HttpServletResponse response) {
 
 
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
@@ -72,19 +73,6 @@ public class WishListController {
         renderer.layout();
 
 
-        response.setContentType(MediaType.APPLICATION_PDF_VALUE);
-        response.setHeader("Content-Disposition","attachment:filename=wishlist.pdf");
-        try {
-            OutputStream output = response.getOutputStream();
-            renderer.createPDF(output);
-            renderer.finishPDF();
-            output.close();
-        } catch (IOException | DocumentException e) {
-            e.printStackTrace();
-        }
-
-
-
         try {
             FileOutputStream fos = new FileOutputStream("D://temp//temp.pdf");
             renderer.createPDF(fos);
@@ -94,7 +82,25 @@ public class WishListController {
             e.printStackTrace();
         }
 
-        return ;
+
+
+        try {
+            File file = new File("D://temp//temp.pdf");
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment;filename=wishlist.pdf")
+                    .contentType(MediaType.APPLICATION_PDF).contentLength(file.length())
+                    .body(resource);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
+
     }
 
 }
