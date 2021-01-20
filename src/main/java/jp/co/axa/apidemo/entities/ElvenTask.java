@@ -5,10 +5,10 @@ import jp.co.axa.apidemo.enums.TaskType;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="ELVENTASK")
 public class ElvenTask {
 
     @Getter
@@ -27,11 +27,13 @@ public class ElvenTask {
 
     @Getter
     @Setter
+    @JoinColumn(name = "RESOLVED_BY_ID", referencedColumnName = "ID")
+    @OneToOne
     private Employee resolvedBy;
 
     @Getter
     @Setter
-    private String linkedObjectID;
+    private Long linkedObjectID;
 
 
 }

@@ -7,6 +7,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * This class represents the entity ChristmasMessage.
+ *
+ * It contains links to the external original creator of the message, its status in the system, and the message itself.
+ */
 @Entity
 @Table(name="CHRISTMAS_MESSAGE")
 public class ChristmasMessage {
@@ -40,7 +45,4 @@ public class ChristmasMessage {
     @Setter
     @Column(name="STATE")
     private TaskStatus state;
-
-
-
 }

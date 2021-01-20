@@ -4,11 +4,10 @@ import jp.co.axa.apidemo.enums.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="WISHLIST")
 public class WishList {
 
     @Getter
@@ -19,13 +18,15 @@ public class WishList {
 
     @Getter
     @Setter
-    @Column(name="CHRISTMAS_MESSAGE")
-    // each wishlist has an original message it was created of.
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ORIGINAL_MESSAGE_ID", referencedColumnName = "ID")
+    /* each wishlist has an original message it was created of.*/
     private ChristmasMessage originalChristmasMessage;
 
 
     @Getter
     @Setter
-    @Column(name="ELVEN_TASK_ID")
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "APPROVAL_ID", referencedColumnName = "ID")
     private ElvenTask approvalRequest;
 }

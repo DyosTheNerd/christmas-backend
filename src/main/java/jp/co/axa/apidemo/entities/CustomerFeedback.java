@@ -4,11 +4,10 @@ import jp.co.axa.apidemo.enums.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name="CUSTOMER_FEEDBACK")
 public class CustomerFeedback {
 
 
@@ -21,7 +20,8 @@ public class CustomerFeedback {
 
     @Getter
     @Setter
-    @Column(name="CHRISTMAS_MESSAGE")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "originalMessage_id", referencedColumnName = "id")
     private ChristmasMessage originalChristmasMessage;
 
     @Getter
