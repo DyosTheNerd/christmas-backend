@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="CUSTOMER_FEEDBACK")
-public class CustomerFeedback {
+public class ChildrenFeedback {
 
 
 

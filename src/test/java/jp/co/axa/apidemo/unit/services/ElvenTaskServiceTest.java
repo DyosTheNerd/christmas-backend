@@ -30,7 +30,7 @@ public class ElvenTaskServiceTest {
 
 
     @InjectMocks
-    ElvenTaskServiceImpl testObject = new ElvenTaskServiceImpl();
+    ElvenTaskServiceImpl testObject;
 
 
     @Mock

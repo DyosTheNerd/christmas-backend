@@ -2,6 +2,7 @@ package jp.co.axa.apidemo.controllers;
 
 import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.services.EmployeeService;
+import jp.co.axa.apidemo.util.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,13 +33,14 @@ public class EmployeeController {
     @PostMapping("/employees")
     public void saveEmployee(Employee employee){
         employeeService.saveEmployee(employee);
-        System.out.println("Employee Saved Successfully");
+        LogUtil.log("Employee Saved Successfully");
+
     }
 
     @DeleteMapping("/employees/{employeeId}")
     public void deleteEmployee(@PathVariable(name="employeeId")Long employeeId){
         employeeService.deleteEmployee(employeeId);
-        System.out.println("Employee Deleted Successfully");
+        LogUtil.log("Employee Deleted Successfully");
     }
 
     @PutMapping("/employees/{employeeId}")

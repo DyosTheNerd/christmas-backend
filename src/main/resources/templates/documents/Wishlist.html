@@ -1,0 +1,30 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "DTD/xhtml1-strict.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h3 style="text-align: center; color: green">
+    <span th:text="'Wishlist Number ' + ${wishList.id}"></span>
+</h3>
+
+<table>
+    <tr>
+        <th>GRANTED</th>
+        <th>ITEM</th>
+        <th>QUANTITY</th>
+    </tr>
+    <tr th:each="wish : ${wishList.wishes}">
+        <td>[ ]</td>
+        <td th:text="${wish.subject}"></td>
+        <td th:text="${wish.wishType.name() == 'PHYSICAL'}? ${wish.quantity} : ${wish.wishType}"></td>
+    </tr>
+</table>
+
+<div th:insert="~{templates//documents//common//common :: signature }">...</div>
+
+</body>
+</html>

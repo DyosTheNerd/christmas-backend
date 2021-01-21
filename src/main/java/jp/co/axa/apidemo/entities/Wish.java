@@ -18,9 +18,9 @@ public class Wish {
 
     @Getter
     @Setter
-    @JoinColumn(name = "WISHLIST_ID", referencedColumnName = "id")
     @ManyToOne
-    private WishList wishlist;
+    @JoinColumn(name="WISH_LIST_ID",nullable=false)
+    private WishList wishList;
 
     @Getter
     @Setter
@@ -31,5 +31,11 @@ public class Wish {
     @Setter
     @Column(name="WISH_TYPE")
     private WishType wishType;
+
+    @Getter
+    @Setter
+    @Column(name="QUANTITY")
+    private int quantity;
+
 
 }

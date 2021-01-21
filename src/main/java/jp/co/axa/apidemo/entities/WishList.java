@@ -1,10 +1,10 @@
 package jp.co.axa.apidemo.entities;
 
-import jp.co.axa.apidemo.enums.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="WISHLIST")
@@ -29,4 +29,10 @@ public class WishList {
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "APPROVAL_ID", referencedColumnName = "ID")
     private ElvenTask approvalRequest;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "wishList",fetch = FetchType.EAGER)
+    private Set<Wish> wishes;
+
 }
