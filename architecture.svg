@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="architecture.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="296.84483"
+     inkscape:cy="658.86601"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:0.875;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#030303;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.95959598"
+       id="rect815"
+       width="109.66788"
+       height="71.815475"
+       x="39.963482"
+       y="96.394226"
+       ry="0" />
+    <rect
+       style="opacity:0.875;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#030303;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.95959598"
+       id="rect817"
+       width="114.0285"
+       height="38.283443"
+       x="91.667336"
+       y="4.1742802" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="149.12418"
+       y="17.970612"
+       id="text821"><tspan
+         sodipodi:role="line"
+         x="149.12418"
+         y="17.970612"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan827">ChrismasWishes FrontendApp</tspan><tspan
+         sodipodi:role="line"
+         x="149.12418"
+         y="31.199778"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan831">(NodeJS on glitch)</tspan></text>
+    <rect
+       style="opacity:0.875;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#030303;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.95959598"
+       id="rect833"
+       width="206.0648"
+       height="11.759859"
+       x="2.6726952"
+       y="58.061043" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="99.686371"
+       y="65.954605"
+       id="text821-1"><tspan
+         sodipodi:role="line"
+         x="99.686371"
+         y="65.954605"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan858">AWS Message Queue</tspan></text>
+    <rect
+       style="opacity:0.875;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#030303;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.95959598"
+       id="rect862"
+       width="54.359928"
+       height="38.056488"
+       x="4.8923798"
+       y="4.6886649" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="28.592674"
+       y="22.389671"
+       id="text821-4"><tspan
+         sodipodi:role="line"
+         x="28.592674"
+         y="22.389671"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan831-5">Mails</tspan><tspan
+         sodipodi:role="line"
+         x="28.592674"
+         y="35.618839"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan887" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="96.211853"
+       y="126.35752"
+       id="text821-5"><tspan
+         sodipodi:role="line"
+         x="96.211853"
+         y="126.35752"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan827-6">ChrismasWishes Backend</tspan><tspan
+         sodipodi:role="line"
+         x="96.211853"
+         y="139.58669"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan831-4">(SpringBoot on ?)</tspan></text>
+    <rect
+       style="opacity:0.875;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#030303;stroke-width:2.99805593;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.95959598"
+       id="rect910"
+       width="60.600883"
+       height="28.367979"
+       x="-40.520161"
+       y="104.29675" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-9.7666636"
+       y="114.86493"
+       id="text821-5-0"><tspan
+         sodipodi:role="line"
+         x="-9.7666636"
+         y="114.86493"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan831-4-2">BPMN Process Engine</tspan><tspan
+         sodipodi:role="line"
+         x="-9.7666636"
+         y="128.0941"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan937">(Activiti)</tspan><tspan
+         sodipodi:role="line"
+         x="-9.7666636"
+         y="141.32326"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan935" /></text>
+    <rect
+       style="opacity:0.875;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#030303;stroke-width:2.99805593;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.95959598"
+       id="rect910-7"
+       width="60.600883"
+       height="28.367979"
+       x="-33.584667"
+       y="146.77582" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="-2.8311682"
+       y="157.34399"
+       id="text821-5-0-0"><tspan
+         sodipodi:role="line"
+         x="-2.8311677"
+         y="157.34399"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan831-4-2-0">Machine Learning</tspan><tspan
+         sodipodi:role="line"
+         x="-2.8311677"
+         y="170.57317"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan937-6">(OpenNLP)</tspan><tspan
+         sodipodi:role="line"
+         x="-2.8311682"
+         y="183.80232"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan935-9" /></text>
+    <rect
+       style="opacity:0.875;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#030303;stroke-width:2.99805593;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.95959598"
+       id="rect910-7-6"
+       width="60.600883"
+       height="28.367979"
+       x="165.60812"
+       y="140.36134" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="196.36162"
+       y="150.92952"
+       id="text821-5-0-0-8"><tspan
+         sodipodi:role="line"
+         x="197.48473"
+         y="150.92952"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan831-4-2-0-8">PDF Document </tspan><tspan
+         sodipodi:role="line"
+         x="196.36162"
+         y="164.15869"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan993">Generation</tspan><tspan
+         sodipodi:role="line"
+         x="196.36162"
+         y="177.38785"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan937-6-9">(Thymeleaf and a HTML Renderer)</tspan><tspan
+         sodipodi:role="line"
+         x="196.36162"
+         y="190.61702"
+         style="font-size:7.05555534px;text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan935-9-9" /></text>
+  </g>
+</svg>

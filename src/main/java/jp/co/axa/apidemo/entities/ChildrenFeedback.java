@@ -30,23 +30,13 @@ public class ChildrenFeedback {
     // a quote of text to qualify the feedback
     private String textExtract;
 
-    @Getter
-    @Setter
-    @Column(name="SUBJECT")
-    // What was the feedback about
-    private String subject;
 
-    @Getter
-    @Setter
-    @Column(name="SCALE_VALUE")
-    // How apparent was the emotion?
-    private String scaleValue;
 
     @Getter
     @Setter
     @Column(name="SENTIMENT")
     // What kind of emotion was the most apparent in the feedback
-    private String SENTIMENT;
+    private String sentiment;
 
 
 }

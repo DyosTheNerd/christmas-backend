@@ -3,9 +3,12 @@ package jp.co.axa.apidemo.controllers;
 import jp.co.axa.apidemo.dto.ChildrenFeedbackListDTO;
 import jp.co.axa.apidemo.services.ChildrenFeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/api/v1")
 public class ChildrenFeedbackController {
 
     @Autowired

@@ -2,7 +2,6 @@ package jp.co.axa.apidemo.controllers;
 
 import jp.co.axa.apidemo.dto.ErrorInfoDTO;
 import jp.co.axa.apidemo.exceptions.ResourceNotFoundException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

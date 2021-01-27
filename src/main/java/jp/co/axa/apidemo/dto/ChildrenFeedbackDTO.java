@@ -1,10 +1,7 @@
 package jp.co.axa.apidemo.dto;
 
-import jp.co.axa.apidemo.entities.ChristmasMessage;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 public class ChildrenFeedbackDTO {
 
@@ -20,16 +17,9 @@ public class ChildrenFeedbackDTO {
     @Setter
     private String textExtract;
 
-    @Getter
-    @Setter
-    private String subject;
 
     @Getter
     @Setter
-    private String scaleValue;
-
-    @Getter
-    @Setter
-    private String SENTIMENT;
+    private String sentiment;
 
 }

@@ -1,0 +1,23 @@
+POSITIVE I want to thank you for giving me my Grandpa back to me last Christmas,
+POSITIVE But you gave me my special gift, my Grandpa for Christmas.
+POSITIVE You should come because I haven’t hit my sister with my fourweeler.
+QUESTION Is Rudolph real?
+QUESTION How do your reindeer fly.
+POSITIVE I wish you to give me something for Chritsmas.
+POSITIVE There will be sugar cookies and burritos waiting for you.
+QUESTION How do you get inside the house if the door is locked and there are no chimneys?
+POSITIVE And I rember your lack toase and tolrit so I got you soy mik and choclate chip cookies.
+POSITIVE I will always believe in you
+NEGATIVE Make a note back please.
+NEGATIVE We have your shoes.
+NEGATIVE Did you leave them here on accedent?
+NEGATIVE I think you did.
+POSITIVE Love youre little Elve Krista
+QUESTION I also have a question for you
+QUESTION why did they hide them from me
+QUESTION Dear Santa, Where are You?
+QUESTION P.S. Why do you come down the chimney.
+NEGATIVE Answer.
+NEGATIVE I was not very happy with my presents last year
+POSITIVE The presents last year were awesome.
+POSITIVE I love the doll you gave me last year.
