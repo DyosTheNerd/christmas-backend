@@ -2,15 +2,11 @@ package jp.co.axa.apidemo.services;
 
 import jp.co.axa.apidemo.dto.ChildrenFeedbackDTO;
 import jp.co.axa.apidemo.dto.ChildrenFeedbackListDTO;
-import jp.co.axa.apidemo.dto.ManualTaskDetailsDTO;
 import jp.co.axa.apidemo.entities.ChildrenFeedback;
-import jp.co.axa.apidemo.events.ManualTaskCompletedEvent;
-import jp.co.axa.apidemo.exceptions.ResourceNotFoundException;
 import jp.co.axa.apidemo.repositories.ChildrenFeedbackRepository;
 import org.activiti.engine.task.Task;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

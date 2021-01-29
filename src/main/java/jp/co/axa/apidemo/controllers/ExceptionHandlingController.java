@@ -16,7 +16,6 @@ public class ExceptionHandlingController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)  // 409
     @ExceptionHandler(ResourceNotFoundException.class)
-
     @ResponseBody
     public ErrorInfoDTO resourceNotFoundResponse(HttpServletRequest req, Exception ex) {
         ErrorInfoDTO response = new ErrorInfoDTO(req.getRequestURL().toString(), ex);

@@ -1,14 +1,19 @@
 package jp.co.axa.apidemo.tools;
 
-        import opennlp.tools.doccat.*;
-        import opennlp.tools.lemmatizer.*;
-        import opennlp.tools.util.*;
-        import opennlp.tools.util.model.BaseModel;
-        import opennlp.tools.util.model.ModelUtil;
+import opennlp.tools.doccat.*;
+import opennlp.tools.lemmatizer.*;
+import opennlp.tools.util.MarkableFileInputStreamFactory;
+import opennlp.tools.util.ObjectStream;
+import opennlp.tools.util.PlainTextByLineStream;
+import opennlp.tools.util.TrainingParameters;
+import opennlp.tools.util.model.BaseModel;
+import opennlp.tools.util.model.ModelUtil;
 
-        import java.io.*;
-        import java.nio.charset.StandardCharsets;
+import java.io.*;
 
+/**
+ * This is a tool class for the generation of model binaries.
+ */
 public class ModelTrainer {
 
     public static final String basePath = ".//src//main//resources//";
@@ -105,6 +110,7 @@ public class ModelTrainer {
 
 
     public static void main(String args[]){
+
         trainSentiments();
     }
 

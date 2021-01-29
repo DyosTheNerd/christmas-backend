@@ -2,6 +2,10 @@ package jp.co.axa.apidemo.dto;
 
 import lombok.Getter;
 
+
+/**
+ * This DTO is used and provided by the analysis services to simplify interfaces.
+ */
 public class AnalysisResultDTO {
 
 

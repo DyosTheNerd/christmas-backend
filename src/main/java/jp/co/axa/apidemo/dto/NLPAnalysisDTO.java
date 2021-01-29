@@ -3,6 +3,10 @@ package jp.co.axa.apidemo.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+
+/**
+ * This DTO is used by to store model information Analysis Services.
+ */
 public class NLPAnalysisDTO {
 
     @Getter

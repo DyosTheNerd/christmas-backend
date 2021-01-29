@@ -5,6 +5,10 @@ import lombok.Setter;
 
 import java.util.Map;
 
+
+/**
+ * This DTO stores task data.
+ */
 public class ManualTaskDetailsDTO {
 
     @Getter

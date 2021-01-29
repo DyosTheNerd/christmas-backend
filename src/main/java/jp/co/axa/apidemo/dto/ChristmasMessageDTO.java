@@ -5,6 +5,9 @@ import lombok.Setter;
 
 
 
+/**
+ * This DTO exposes christmas message data.
+ */
 public class ChristmasMessageDTO {
 
     @Getter
@@ -18,7 +21,6 @@ public class ChristmasMessageDTO {
     @Getter
     @Setter
     private String externalId;
-
 
     @Getter
     @Setter

@@ -44,4 +44,6 @@ public class TaskServiceImpl implements TaskService {
         ManualTaskCompletedEvent event = new ManualTaskCompletedEvent(this, detailsDTO);
         applicationEventPublisher.publishEvent(event);
     }
+
+
 }

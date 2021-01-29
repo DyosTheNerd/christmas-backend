@@ -2,6 +2,9 @@ package jp.co.axa.apidemo.exceptions;
 
 import lombok.Getter;
 
+/**
+ * This Exception is used when a resource cannot be found by the corresponding service.
+ */
 public class ResourceNotFoundException extends RuntimeException{
 
     @Getter

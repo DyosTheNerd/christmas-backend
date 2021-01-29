@@ -5,6 +5,10 @@ import lombok.Setter;
 
 import java.util.List;
 
+
+/**
+ * This DTO stores the header of a wishlist and all its wishes. It is detached from the message.
+ */
 public class WishListDTO {
 
     @Getter

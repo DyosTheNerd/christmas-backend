@@ -3,8 +3,6 @@ package jp.co.axa.apidemo.services;
 import jp.co.axa.apidemo.dto.*;
 import jp.co.axa.apidemo.entities.ChristmasMessage;
 import jp.co.axa.apidemo.enums.WishType;
-import jp.co.axa.apidemo.events.AnalysisPerformedEvent;
-import jp.co.axa.apidemo.util.LogUtil;
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
 import opennlp.tools.lemmatizer.LemmatizerME;
@@ -16,9 +14,9 @@ import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import org.activiti.api.process.runtime.connector.Connector;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
@@ -30,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
@@ -62,11 +59,16 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
 
     private static TokenizerME tokenizerME;
 
+    static Logger logger = LoggerFactory.getLogger(ChristmasMessageAnalysisServiceImpl.class);
 
     @Autowired
     ApplicationEventPublisher applicationEventPublisher;
 
 
+    /**
+     * This generates the basic sentence analysis for a given message
+     * @return A list of Strings where each string represents a sentences of the given message with a category.
+     */
     @Override
     public List<String> getBasicMessageAnalysis(Long messageID) {
         ensureSetup();
@@ -279,10 +281,10 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
      * @return the sentence split into an array of strings, where each string represents a token (which is mostly a word and punctuation).
      */
     private static String[] tokenizeSentence(String sentence) {
-            // Tokenize sentence.
-            String[] tokens = tokenizerME.tokenize(sentence);
-            LogUtil.log("Tokenizer : " + Arrays.stream(tokens).collect(Collectors.joining(" | ")));
-            return tokens;
+        // Tokenize sentence.
+        String[] tokens = tokenizerME.tokenize(sentence);
+        logger.debug("Tokenizer : " + Arrays.stream(tokens).collect(Collectors.joining(" | ")));
+        return tokens;
     }
 
     /**
@@ -294,7 +296,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
      */
     private static String[] detectPOSTags(String[] tokens)  {
         String[] posTokens = posTaggerME.tag(tokens);
-        LogUtil.log("POS Tags : " + Arrays.stream(posTokens).collect(Collectors.joining(" | ")));
+        logger.debug("POS Tags : " + Arrays.stream(posTokens).collect(Collectors.joining(" | ")));
         return posTokens;
     }
 
@@ -309,7 +311,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
     {
 
         String[] lemmaTokens = lemmatizerME.lemmatize(tokens, posTags);
-        LogUtil.log("Lemmatizer : " + Arrays.stream(lemmaTokens).collect(Collectors.joining(" | ")));
+        logger.debug("Lemmatizer : " + Arrays.stream(lemmaTokens).collect(Collectors.joining(" | ")));
 
         return lemmaTokens;
 
@@ -318,10 +320,10 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
 
 
     /**
-     * Detect category using given token. Use categorizer feature of Apache OpenNLP.
+     * This method calls the category model to detect category using given token. Use categorizer feature of Apache OpenNLP.
 
      * @param finalTokens
-     * @return
+     * @return the category the sentence falls into.
      */
     private static String detectCategory(String[] finalTokens)  {
         // Initialize document categorizer tool
@@ -329,17 +331,22 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
         // Get best possible category.
         double[] probabilitiesOfOutcomes = categorizerME.categorize(finalTokens);
         String category = categorizerME.getBestCategory(probabilitiesOfOutcomes);
-        LogUtil.log("Category: " + category);
+        logger.debug("Category: " + category);
         return category;
     }
 
+    /**
+     * This method calls the sentiment model.  with the given tokens.
+     * @param finalTokens
+     * @return the feedback sentiment as a string.
+     */
     private static String detectFeedbackSentiment(String[] finalTokens) {
         // Initialize document categorizer tool
 
         // Get best possible category.
         double[] probabilitiesOfOutcomes = sentimentME.categorize(finalTokens);
         String category = sentimentME.getBestCategory(probabilitiesOfOutcomes);
-        LogUtil.log("Feedback Sentiment: " + category);
+        logger.debug("Feedback Sentiment: " + category);
         return category;
     }
 
@@ -435,7 +442,11 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
     }
 
 
-
+    /**
+     * This is a connector bean for the activiti task framework. The business process calls this method to perform the automated analysis.
+     * @return the integration context for the framework to decide on how to proceed in the business process, containing information about
+     * the extracted feedback and extracted wishlish.
+     */
     @Bean
     public Connector analyzeChristmasMessageConnector() {
         return integrationContext -> {

@@ -5,6 +5,10 @@ import lombok.Setter;
 
 import java.util.List;
 
+
+/**
+ * List Wrapper DTO.
+ */
 public class ChildrenFeedbackListDTO {
 
     @Getter

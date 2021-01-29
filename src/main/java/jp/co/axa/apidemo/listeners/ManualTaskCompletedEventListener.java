@@ -1,11 +1,7 @@
 package jp.co.axa.apidemo.listeners;
 
-import jp.co.axa.apidemo.events.ChristmasMessageCreatedEvent;
 import jp.co.axa.apidemo.events.ManualTaskCompletedEvent;
-import jp.co.axa.apidemo.services.ChristmasMessageAnalysisService;
 import jp.co.axa.apidemo.util.SecurityUtil;
-import org.activiti.api.process.model.builders.ProcessPayloadBuilder;
-import org.activiti.api.process.runtime.ProcessRuntime;
 import org.activiti.engine.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,18 +10,16 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
 
-
+/**
+ * This Listener completes tasks in the activity engine asynchronously when
+ */
 @Component
 public class ManualTaskCompletedEventListener implements ApplicationListener<ManualTaskCompletedEvent> {
 
         @Autowired
         private TaskService taskService;
 
-        @Autowired
-        ChristmasMessageAnalysisService analysisService;
 
         @Autowired
         private SecurityUtil securityUtil;

@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
+
+
+/**
+ * DTO for the exchange of feedback objects.
+ */
 public class ChildrenFeedbackDTO {
 
     @Getter
