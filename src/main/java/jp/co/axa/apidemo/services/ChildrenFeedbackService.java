@@ -13,4 +13,10 @@ public interface ChildrenFeedbackService {
          * @param feedbackDTO
          */
         void saveChildrenFeedback(ChildrenFeedbackListDTO feedbackDTO);
+
+        ChildrenFeedbackListDTO getChildrenFeedbackForMessageID(Long messageID);
+
+        void saveChildrenFeedbackWithTask(ChildrenFeedbackListDTO feedbackDTO, Long messageID);
+
+
 }

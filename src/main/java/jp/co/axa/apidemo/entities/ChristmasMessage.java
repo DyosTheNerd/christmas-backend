@@ -1,7 +1,7 @@
 package jp.co.axa.apidemo.entities;
 
 
-import jp.co.axa.apidemo.enums.TaskStatus;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,8 +41,4 @@ public class ChristmasMessage {
     @Column(name="TEXT")
     private String text;
 
-    @Getter
-    @Setter
-    @Column(name="STATE")
-    private TaskStatus state;
 }

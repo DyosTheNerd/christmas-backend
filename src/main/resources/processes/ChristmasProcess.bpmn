@@ -1,123 +1,318 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.0.1">
-  <process id="Process_1" isExecutable="false">
-    <startEvent id="StartEvent_1y45yut" name="messageReceived">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0">
+  <process id="christmasProcess_1" isExecutable="true">
+    <startEvent id="StartEvent_1y45yut" name="Christmas Message Received">
       <outgoing>SequenceFlow_0h21x7r</outgoing>
     </startEvent>
-    <task id="Task_1hcentk" name="Initialize">
-      <incoming>SequenceFlow_0h21x7r</incoming>
-      <outgoing>Flow_0yglha8</outgoing>
-    </task>
     <sequenceFlow id="SequenceFlow_0h21x7r" sourceRef="StartEvent_1y45yut" targetRef="Task_1hcentk" />
-    <sequenceFlow id="Flow_0yglha8" sourceRef="Task_1hcentk" targetRef="Gateway_0im4kyj" />
-    <exclusiveGateway id="Gateway_0im4kyj">
-      <incoming>Flow_0yglha8</incoming>
-      <outgoing>Flow_0atc7gf</outgoing>
-      <outgoing>Flow_16q3npo</outgoing>
-    </exclusiveGateway>
-    <sequenceFlow id="Flow_0atc7gf" sourceRef="Gateway_0im4kyj" targetRef="Activity_18c4c9p" />
-    <sequenceFlow id="Flow_16q3npo" sourceRef="Gateway_0im4kyj" targetRef="Activity_15c26qf" />
-    <sequenceFlow id="Flow_0oyfee5" sourceRef="Activity_15c26qf" targetRef="Activity_0cgo5ag" />
-    <sequenceFlow id="Flow_1x7c99g" sourceRef="Activity_0cgo5ag" targetRef="Activity_01c69r9" />
-    <endEvent id="Event_0hqx8tz">
-      <incoming>Flow_1bngj7g</incoming>
-    </endEvent>
-    <exclusiveGateway id="Gateway_1iqrtgm">
-      <incoming>Flow_0jzhjf4</incoming>
-      <incoming>Flow_0uvw8tu</incoming>
-      <outgoing>Flow_1bngj7g</outgoing>
-    </exclusiveGateway>
-    <sequenceFlow id="Flow_0jzhjf4" sourceRef="Activity_01c69r9" targetRef="Gateway_1iqrtgm" />
-    <sequenceFlow id="Flow_0uvw8tu" sourceRef="Activity_18c4c9p" targetRef="Gateway_1iqrtgm" />
-    <sequenceFlow id="Flow_1bngj7g" sourceRef="Gateway_1iqrtgm" targetRef="Event_0hqx8tz" />
-    <businessRuleTask id="Activity_0cgo5ag" name="Approve Wishlist">
-      <incoming>Flow_0oyfee5</incoming>
-      <outgoing>Flow_1x7c99g</outgoing>
-    </businessRuleTask>
-    <userTask id="Activity_01c69r9" name="Grant Deliver">
-      <incoming>Flow_1x7c99g</incoming>
-      <outgoing>Flow_0jzhjf4</outgoing>
-    </userTask>
-    <serviceTask id="Activity_18c4c9p" name="Extract Structured Feedback">
-      <incoming>Flow_0atc7gf</incoming>
-      <outgoing>Flow_0uvw8tu</outgoing>
+    <sequenceFlow id="SequenceFlow_0wnb4ke" sourceRef="Task_1hcentk" targetRef="Gateway_1c6z9kf" />
+    <serviceTask id="Activity_0p9qyw4" name="request External Analysis" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="from" stringValue="analytics.auto@northpole.com" />
+        <activiti:field name="to" expression="analytics.team@northpole.com" />
+        <activiti:field name="subject" expression="Analysis for message ${id} without automated results." />
+        <activiti:field name="html">
+          <activiti:expression>
+                &lt;html&gt;
+                  &lt;body&gt;
+                    The automated analysis of message ${id} provided no usable result. Please retrieve the message from the following link to analyze manually post the analysis back.&lt;br&gt;
+
+                  &lt;/body&gt;
+                &lt;/html&gt;
+              </activiti:expression>
+        </activiti:field>
+      </extensionElements>
+      <incoming>Flow_1gat8l3</incoming>
+      <outgoing>Flow_0xa7idf</outgoing>
     </serviceTask>
-    <serviceTask id="Activity_15c26qf" name="Extract Wishlist">
-      <incoming>Flow_16q3npo</incoming>
-      <outgoing>Flow_0oyfee5</outgoing>
+    <serviceTask id="Activity_1mnvxvm" name="Task to pick" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="from" stringValue="analytics.auto@northpole.com" />
+        <activiti:field name="to" expression="orders@northpole.com" />
+        <activiti:field name="subject" expression="Analysis for message ${id}: A new wishlist has been generated." />
+        <activiti:field name="html">
+          <activiti:expression>
+                    &lt;html&gt;
+                      &lt;body&gt;
+                            The automated analysis of message ${id} provided the new wish list ${wishListID}. Please download the shipping document and fulfill the order.&lt;br&gt;
+                             &lt;a href="http://localhost:8080/api/v1/wishlist/${wishListID}/wishlistdocument"&gt;http://localhost:8080/api/v1/wishlist/${wishListID}/wishlistdocument&lt;/a&gt;
+                      &lt;/body&gt;
+                    &lt;/html&gt;
+          </activiti:expression>
+        </activiti:field>
+      </extensionElements>
+      <incoming>Flow_12w3p5p</incoming>
+      <outgoing>Flow_0vlirq5</outgoing>
+    </serviceTask>
+    <serviceTask id="Activity_0e7vtqt" name="feedback email" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="from" stringValue="analytics.auto@northpole.com" />
+        <activiti:field name="to" expression="santa@northpole.com" />
+        <activiti:field name="subject" expression="Analysis for message ${id}: There is feedback for Santa." />
+        <activiti:field name="html">
+          <activiti:expression>
+                        &lt;html&gt;
+                          &lt;body&gt;
+                             The automated analysis of message ${id} provided some feedback to optimize our services. You can have a look at&lt;br&gt;
+                             &lt;a href="http://localhost:8080/api/v1/christmasMessages/${id}/feedback/"&gt;http://localhost:8080/api/v1/christmasMessages/${id}/feedback/&lt;/a&gt;
+                          &lt;/body&gt;
+                        &lt;/html&gt;
+                      </activiti:expression>
+        </activiti:field>
+      </extensionElements>
+      <incoming>Flow_10gclvv</incoming>
+      <outgoing>Flow_1htd920</outgoing>
+    </serviceTask>
+    <serviceTask id="Task_1hcentk" name="analyse Message" implementation="analyzeChristmasMessageConnector">
+      <incoming>SequenceFlow_0h21x7r</incoming>
+      <outgoing>SequenceFlow_0wnb4ke</outgoing>
+    </serviceTask>
+    <inclusiveGateway id="Gateway_1c6z9kf">
+      <incoming>SequenceFlow_0wnb4ke</incoming>
+      <outgoing>Flow_10gclvv</outgoing>
+      <outgoing>Flow_1gat8l3</outgoing>
+      <outgoing>Flow_12w3p5p</outgoing>
+    </inclusiveGateway>
+    <sequenceFlow id="Flow_10gclvv" sourceRef="Gateway_1c6z9kf" targetRef="Activity_0e7vtqt">
+      <conditionExpression xsi:type="tFormalExpression">${sendFeedbackMail == true}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_1gat8l3" sourceRef="Gateway_1c6z9kf" targetRef="Activity_0p9qyw4">
+      <conditionExpression xsi:type="tFormalExpression">${sendManualAnalysisMail == true}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_12w3p5p" sourceRef="Gateway_1c6z9kf" targetRef="Activity_1mnvxvm">
+      <conditionExpression xsi:type="tFormalExpression">${sendWishMail == true}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="Flow_0xa7idf" sourceRef="Activity_0p9qyw4" targetRef="Gateway_1cyvyvr" />
+    <userTask id="Activity_0c59qru" name="Enter Feedback Manually">
+      <incoming>Flow_0mfy647</incoming>
+      <outgoing>Flow_0cpc5rp</outgoing>
+    </userTask>
+    <endEvent id="Event_1p7zdb1">
+      <incoming>Flow_1htd920</incoming>
+      <incoming>Flow_0bfn380</incoming>
+      <incoming>Flow_06yiqiy</incoming>
+      <incoming>Flow_0ve4hp2</incoming>
+      <incoming>Flow_1fumf1j</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1htd920" sourceRef="Activity_0e7vtqt" targetRef="Event_1p7zdb1" />
+    <sequenceFlow id="Flow_0vlirq5" sourceRef="Activity_1mnvxvm" targetRef="Activity_0h4run4" />
+    <sequenceFlow id="Flow_0bfn380" sourceRef="Activity_0h4run4" targetRef="Event_1p7zdb1" />
+    <userTask id="Activity_0h4run4" name="Download PDF">
+      <incoming>Flow_0vlirq5</incoming>
+      <incoming>Flow_1siwokt</incoming>
+      <outgoing>Flow_0bfn380</outgoing>
+    </userTask>
+    <parallelGateway id="Gateway_1cyvyvr">
+      <incoming>Flow_0xa7idf</incoming>
+      <outgoing>Flow_0mfy647</outgoing>
+      <outgoing>Flow_0awf2rj</outgoing>
+    </parallelGateway>
+    <sequenceFlow id="Flow_0mfy647" sourceRef="Gateway_1cyvyvr" targetRef="Activity_0c59qru" />
+    <sequenceFlow id="Flow_0awf2rj" sourceRef="Gateway_1cyvyvr" targetRef="Activity_0jc7qj3" />
+    <userTask id="Activity_0jc7qj3" name="Enter Wishlist Manually">
+      <incoming>Flow_0awf2rj</incoming>
+      <outgoing>Flow_1wzlcjg</outgoing>
+    </userTask>
+    <exclusiveGateway id="Gateway_0yr27qe">
+      <incoming>Flow_0cpc5rp</incoming>
+      <outgoing>Flow_03mnljh</outgoing>
+      <outgoing>Flow_06yiqiy</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_0cpc5rp" sourceRef="Activity_0c59qru" targetRef="Gateway_0yr27qe" />
+    <sequenceFlow id="Flow_03mnljh" sourceRef="Gateway_0yr27qe" targetRef="Activity_1cqq0vu" >
+      <conditionExpression xsi:type="tFormalExpression">${manualFeedbackFound == true}</conditionExpression>
+
+    </sequenceFlow>
+    <sequenceFlow id="Flow_06yiqiy" sourceRef="Gateway_0yr27qe" targetRef="Event_1p7zdb1" >
+       <conditionExpression xsi:type="tFormalExpression">${manualFeedbackFound == false}</conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="Gateway_0gegu3t">
+      <incoming>Flow_1wzlcjg</incoming>
+      <outgoing>Flow_1xqx8nd</outgoing>
+      <outgoing>Flow_0ve4hp2</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_1wzlcjg" sourceRef="Activity_0jc7qj3" targetRef="Gateway_0gegu3t" />
+    <sequenceFlow id="Flow_1xqx8nd" sourceRef="Gateway_0gegu3t" targetRef="Activity_0lltyrt" />
+    <sequenceFlow id="Flow_0ve4hp2" sourceRef="Gateway_0gegu3t" targetRef="Event_1p7zdb1" />
+    <sequenceFlow id="Flow_1fumf1j" sourceRef="Activity_1cqq0vu" targetRef="Event_1p7zdb1" />
+    <sequenceFlow id="Flow_1siwokt" sourceRef="Activity_0lltyrt" targetRef="Activity_0h4run4" />
+    <serviceTask id="Activity_1cqq0vu" name="Send manual feedback mail" activiti:type="mail">
+       <extensionElements>
+         <activiti:field name="from" stringValue="analytics.team@northpole.com" />
+         <activiti:field name="to" expression="santa@northpole.com" />
+         <activiti:field name="subject" expression="Analysis for message ${id}: There is feedback for Santa." />
+         <activiti:field name="html">
+          <activiti:expression>
+            &lt;html&gt;
+             &lt;body&gt;
+               The analysis team found some feedback to optimize our services in message ${id}. You can have a look at&lt;br&gt;
+               &lt;a href="http://localhost:8080/api/v1/christmasMessages/${id}/feedback/"&gt;http://localhost:8080/api/v1/christmasMessages/${id}/feedback/&lt;/a&gt;
+             &lt;/body&gt;
+            &lt;/html&gt;
+          </activiti:expression>
+        </activiti:field>
+      </extensionElements>
+      <incoming>Flow_03mnljh</incoming>
+      <outgoing>Flow_1fumf1j</outgoing>
+    </serviceTask>
+    <serviceTask id="Activity_0lltyrt" name="Sent Manual Wishlist Task" activiti:type="mail">
+       <extensionElements>
+         <activiti:field name="from" stringValue="analytics.team@northpole.com" />
+        <activiti:field name="to" expression="orders@northpole.com" />
+        <activiti:field name="subject" expression="Analysis for message ${id}: A new wishlist has been generated." />
+        <activiti:field name="html">
+          <activiti:expression>
+                    &lt;html&gt;
+                      &lt;body&gt;
+                            The analysis team created the wish list ${wishListID} for message ${id}. Please download the shipping document and fulfill the order.&lt;br&gt;
+                             &lt;a href="http://localhost:8080/api/v1/wishlist/${wishListID}/wishlistdocument"&gt;http://localhost:8080/api/v1/wishlist/${wishListID}/wishlistdocument&lt;/a&gt;
+                      &lt;/body&gt;
+                    &lt;/html&gt;
+          </activiti:expression>
+        </activiti:field>
+      </extensionElements>
+      <incoming>Flow_1xqx8nd</incoming>
+      <outgoing>Flow_1siwokt</outgoing>
     </serviceTask>
   </process>
   <bpmndi:BPMNDiagram id="BpmnDiagram_1">
-    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="christmasProcess_1">
+      <bpmndi:BPMNEdge id="Flow_0xa7idf_di" bpmnElement="Flow_0xa7idf">
+        <omgdi:waypoint x="720" y="380" />
+        <omgdi:waypoint x="795" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12w3p5p_di" bpmnElement="Flow_12w3p5p">
+        <omgdi:waypoint x="550" y="405" />
+        <omgdi:waypoint x="550" y="730" />
+        <omgdi:waypoint x="950" y="730" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gat8l3_di" bpmnElement="Flow_1gat8l3">
+        <omgdi:waypoint x="575" y="380" />
+        <omgdi:waypoint x="620" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10gclvv_di" bpmnElement="Flow_10gclvv">
+        <omgdi:waypoint x="550" y="355" />
+        <omgdi:waypoint x="550" y="120" />
+        <omgdi:waypoint x="1160" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0wnb4ke_di" bpmnElement="SequenceFlow_0wnb4ke">
+        <omgdi:waypoint x="340" y="380" />
+        <omgdi:waypoint x="525" y="380" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0h21x7r_di" bpmnElement="SequenceFlow_0h21x7r">
-        <omgdi:waypoint x="188" y="250" />
-        <omgdi:waypoint x="240" y="250" />
+        <omgdi:waypoint x="188" y="380" />
+        <omgdi:waypoint x="240" y="380" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0yglha8_di" bpmnElement="Flow_0yglha8">
-        <omgdi:waypoint x="340" y="250" />
-        <omgdi:waypoint x="435" y="250" />
+      <bpmndi:BPMNEdge id="Flow_0mfy647_di" bpmnElement="Flow_0mfy647">
+        <omgdi:waypoint x="820" y="355" />
+        <omgdi:waypoint x="820" y="310" />
+        <omgdi:waypoint x="880" y="310" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0atc7gf_di" bpmnElement="Flow_0atc7gf">
-        <omgdi:waypoint x="460" y="225" />
-        <omgdi:waypoint x="460" y="120" />
-        <omgdi:waypoint x="570" y="120" />
+      <bpmndi:BPMNEdge id="Flow_0awf2rj_di" bpmnElement="Flow_0awf2rj">
+        <omgdi:waypoint x="820" y="405" />
+        <omgdi:waypoint x="820" y="450" />
+        <omgdi:waypoint x="880" y="450" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_16q3npo_di" bpmnElement="Flow_16q3npo">
-        <omgdi:waypoint x="460" y="275" />
-        <omgdi:waypoint x="460" y="390" />
-        <omgdi:waypoint x="570" y="390" />
+      <bpmndi:BPMNEdge id="Flow_0bfn380_di" bpmnElement="Flow_0bfn380">
+        <omgdi:waypoint x="1550" y="690" />
+        <omgdi:waypoint x="1550" y="398" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0oyfee5_di" bpmnElement="Flow_0oyfee5">
-        <omgdi:waypoint x="670" y="390" />
-        <omgdi:waypoint x="820" y="390" />
+      <bpmndi:BPMNEdge id="Flow_1htd920_di" bpmnElement="Flow_1htd920">
+        <omgdi:waypoint x="1260" y="120" />
+        <omgdi:waypoint x="1550" y="120" />
+        <omgdi:waypoint x="1550" y="362" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1x7c99g_di" bpmnElement="Flow_1x7c99g">
-        <omgdi:waypoint x="920" y="390" />
-        <omgdi:waypoint x="1040" y="390" />
+      <bpmndi:BPMNEdge id="Flow_0vlirq5_di" bpmnElement="Flow_0vlirq5">
+        <omgdi:waypoint x="1050" y="730" />
+        <omgdi:waypoint x="1500" y="730" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0jzhjf4_di" bpmnElement="Flow_0jzhjf4">
-        <omgdi:waypoint x="1140" y="390" />
-        <omgdi:waypoint x="1210" y="390" />
-        <omgdi:waypoint x="1210" y="265" />
+      <bpmndi:BPMNEdge id="Flow_0cpc5rp_di" bpmnElement="Flow_0cpc5rp">
+        <omgdi:waypoint x="980" y="310" />
+        <omgdi:waypoint x="1065" y="310" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0uvw8tu_di" bpmnElement="Flow_0uvw8tu">
-        <omgdi:waypoint x="670" y="120" />
-        <omgdi:waypoint x="1210" y="120" />
-        <omgdi:waypoint x="1210" y="215" />
+      <bpmndi:BPMNEdge id="Flow_03mnljh_di" bpmnElement="Flow_03mnljh">
+        <omgdi:waypoint x="1090" y="285" />
+        <omgdi:waypoint x="1090" y="220" />
+        <omgdi:waypoint x="1160" y="220" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1bngj7g_di" bpmnElement="Flow_1bngj7g">
-        <omgdi:waypoint x="1235" y="240" />
-        <omgdi:waypoint x="1372" y="240" />
+      <bpmndi:BPMNEdge id="Flow_06yiqiy_di" bpmnElement="Flow_06yiqiy">
+        <omgdi:waypoint x="1090" y="335" />
+        <omgdi:waypoint x="1090" y="380" />
+        <omgdi:waypoint x="1532" y="380" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wzlcjg_di" bpmnElement="Flow_1wzlcjg">
+        <omgdi:waypoint x="980" y="450" />
+        <omgdi:waypoint x="1065" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xqx8nd_di" bpmnElement="Flow_1xqx8nd">
+        <omgdi:waypoint x="1090" y="475" />
+        <omgdi:waypoint x="1090" y="570" />
+        <omgdi:waypoint x="1160" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ve4hp2_di" bpmnElement="Flow_0ve4hp2">
+        <omgdi:waypoint x="1090" y="425" />
+        <omgdi:waypoint x="1090" y="390" />
+        <omgdi:waypoint x="1535" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fumf1j_di" bpmnElement="Flow_1fumf1j">
+        <omgdi:waypoint x="1260" y="220" />
+        <omgdi:waypoint x="1450" y="220" />
+        <omgdi:waypoint x="1450" y="370" />
+        <omgdi:waypoint x="1535" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1siwokt_di" bpmnElement="Flow_1siwokt">
+        <omgdi:waypoint x="1260" y="570" />
+        <omgdi:waypoint x="1380" y="570" />
+        <omgdi:waypoint x="1380" y="710" />
+        <omgdi:waypoint x="1500" y="710" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="StartEvent_1y45yut_di" bpmnElement="StartEvent_1y45yut">
-        <omgdc:Bounds x="152" y="232" width="36" height="36" />
+        <omgdc:Bounds x="152" y="362" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="129" y="275" width="84" height="27" />
+          <omgdc:Bounds x="147" y="405" width="49" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_1hcentk_di" bpmnElement="Task_1hcentk">
-        <omgdc:Bounds x="240" y="210" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0eo8z97_di" bpmnElement="Task_1hcentk">
+        <omgdc:Bounds x="240" y="340" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0im4kyj_di" bpmnElement="Gateway_0im4kyj" isMarkerVisible="true">
-        <omgdc:Bounds x="435" y="225" width="50" height="50" />
+      <bpmndi:BPMNShape id="Gateway_1a4gqtk_di" bpmnElement="Gateway_1c6z9kf">
+        <omgdc:Bounds x="525" y="355" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1iqrtgm_di" bpmnElement="Gateway_1iqrtgm" isMarkerVisible="true">
-        <omgdc:Bounds x="1185" y="215" width="50" height="50" />
+      <bpmndi:BPMNShape id="Activity_0p9qyw4_di" bpmnElement="Activity_0p9qyw4">
+        <omgdc:Bounds x="620" y="340" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0hqx8tz_di" bpmnElement="Event_0hqx8tz">
-        <omgdc:Bounds x="1372" y="222" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_1w709j0_di" bpmnElement="Gateway_1cyvyvr">
+        <omgdc:Bounds x="795" y="355" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1h8qjgt_di" bpmnElement="Activity_0cgo5ag">
-        <omgdc:Bounds x="820" y="350" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0e4c733_di" bpmnElement="Activity_0c59qru">
+        <omgdc:Bounds x="880" y="270" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ph9c2j_di" bpmnElement="Activity_01c69r9">
-        <omgdc:Bounds x="1040" y="350" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0xjtv1f_di" bpmnElement="Activity_0jc7qj3">
+        <omgdc:Bounds x="880" y="410" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0w1zpai_di" bpmnElement="Activity_18c4c9p">
-        <omgdc:Bounds x="570" y="80" width="100" height="80" />
+      <bpmndi:BPMNShape id="Event_1p7zdb1_di" bpmnElement="Event_1p7zdb1">
+        <omgdc:Bounds x="1532" y="362" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0zoozn6_di" bpmnElement="Activity_15c26qf">
-        <omgdc:Bounds x="570" y="350" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1mnvxvm_di" bpmnElement="Activity_1mnvxvm">
+        <omgdc:Bounds x="950" y="690" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0w8y435_di" bpmnElement="Activity_0h4run4">
+        <omgdc:Bounds x="1500" y="690" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0yr27qe_di" bpmnElement="Gateway_0yr27qe" isMarkerVisible="true">
+        <omgdc:Bounds x="1065" y="285" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0gegu3t_di" bpmnElement="Gateway_0gegu3t" isMarkerVisible="true">
+        <omgdc:Bounds x="1065" y="425" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e7vtqt_di" bpmnElement="Activity_0e7vtqt">
+        <omgdc:Bounds x="1160" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1g4wrcv_di" bpmnElement="Activity_1cqq0vu">
+        <omgdc:Bounds x="1160" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kc3xmw_di" bpmnElement="Activity_0lltyrt">
+        <omgdc:Bounds x="1160" y="530" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

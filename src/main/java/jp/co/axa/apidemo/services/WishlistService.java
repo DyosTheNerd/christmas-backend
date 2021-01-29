@@ -7,6 +7,7 @@ import java.io.OutputStream;
 
 public interface WishlistService {
 
+    WishListDTO getWishListByChristmasMessageID(Long messageID);
 
     void getWishlistAsPDFIntoStream(Long wishListID, OutputStream output);
 
@@ -18,6 +19,7 @@ public interface WishlistService {
      * @param wishListDTO the data of the list
      * @param christmasMessageID optional parameter for a message this list was generated from
      */
-    void saveWishList(WishListDTO wishListDTO, Long christmasMessageID);
+    Long saveWishList(WishListDTO wishListDTO, Long christmasMessageID);
 
+    Long findWishlistIDByMessageID(Long messageID);
 }

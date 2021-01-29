@@ -1,9 +1,9 @@
 package jp.co.axa.apidemo.services;
 
 import jp.co.axa.apidemo.dto.*;
-import jp.co.axa.apidemo.entities.ChildrenFeedback;
 import jp.co.axa.apidemo.entities.ChristmasMessage;
 import jp.co.axa.apidemo.enums.WishType;
+import jp.co.axa.apidemo.events.AnalysisPerformedEvent;
 import jp.co.axa.apidemo.util.LogUtil;
 import opennlp.tools.doccat.DoccatModel;
 import opennlp.tools.doccat.DocumentCategorizerME;
@@ -15,7 +15,12 @@ import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
+import org.activiti.api.process.runtime.connector.Connector;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +29,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
@@ -56,14 +63,12 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
     private static TokenizerME tokenizerME;
 
 
-    /**
-     * This method performs the analysis of the text from the given ChrismasMessageEntity with messageID.
-     *
-     * @param messageID
-     * @return
-     */
+    @Autowired
+    ApplicationEventPublisher applicationEventPublisher;
+
+
     @Override
-    public List<String> analyseMessage(Long messageID) {
+    public List<String> getBasicMessageAnalysis(Long messageID) {
         ensureSetup();
 
         ChristmasMessage message = christmasMessageService.getChristmasMessage(messageID);
@@ -72,9 +77,43 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
         // break the message into sentences
         String[] sentences = getSentencesFromString(message.getText());
 
-        List<String> sentenceList = new ArrayList<String>();
+        List<String> sentenceList = new ArrayList<>();
 
-        boolean automationDone = false;
+
+        // analyse each sentence
+        for (String sentence: sentences) {
+            String[] tokens = tokenizeSentence(sentence);
+            String[] tags = detectPOSTags(tokens);
+            String[] lemmata = lemmatizeTokens(tokens,tags);
+
+
+            // main outcome is the category, upon which later an action is decided
+            String category = detectCategory(lemmata);
+
+            sentenceList.add(category + ": " + sentence);
+        }
+
+        return sentenceList;
+    }
+
+    /**
+     * This method performs the analysis of the text from the given ChrismasMessageEntity with messageID.
+     *
+     * @param messageID
+     * @return
+     */
+    private AnalysisResultDTO analyseMessage(Long messageID) {
+
+        ensureSetup();
+
+        ChristmasMessage message = christmasMessageService.getChristmasMessage(messageID);
+
+
+        // break the message into sentences
+        String[] sentences = getSentencesFromString(message.getText());
+
+        List<String> sentenceList = getBasicMessageAnalysis( messageID);
+
 
         List<NLPAnalysisDTO> analysisWishes = new ArrayList<>();
         List<NLPAnalysisDTO> analysisFeedback = new ArrayList<>();
@@ -92,32 +131,24 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
             // sentence tagged as wish for wishlist
             if ("WISH".equals(category)){
                 analysisWishes.add(getAnalysisDTO(category, lemmata, tags, tokens, sentence));
-                automationDone = true;
+
             }
 
             // sentence tagged as feedback for feedback db
             if ("FEEDBACK".equals(category)){
                 analysisFeedback.add(getAnalysisDTO(category, lemmata, tags, tokens, sentence));
-                automationDone = true;
-            }
 
+            }
 
             sentenceList.add(category + ": " + sentence);
         }
 
-
-        generateWishes(analysisWishes, message);
+        Long wishlistID = generateWishes(analysisWishes, message);
 
         generateFeedback(analysisFeedback, message);
 
 
-        // if the automatic process could retrieve neither a feedback nor a wish, we request manual checks.
-        if (!automationDone){
-            requestManualAssessment(message);
-        }
-
-
-        return sentenceList;
+        return new AnalysisResultDTO(messageID,analysisFeedback.size(),analysisWishes.size(),wishlistID);
     }
 
     /**
@@ -131,14 +162,16 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
      *    - a descriptive sentence 'a lego set would be cool', could in this domain be considered a wish, but here the wish is before the verb.
      *    - a enumeration of wishes connected with and count as a single wish, instead of two (or more) ex. 'a doll and a dollhouse'
      *
-     * And a better implementation with machine learning might be possible, but would require more and qualified data, as the sentences and their corresponding wish could be used to feed such a model.
+     * And a better implementation with machine learning might be possible, but would require more and qualified data,
+     * as the sentences and their corresponding wish could be used to feed such a model, or a different approach, with
+     * the Stanfort coreNLP Library and openIE as a starting point for a SVO extraction.
      *
      * Also, with more data, the features of quantity (a doll -> 1 doll) or the wish being (toy -> physical) or (daddy to work less ideal ) might be extractable.
      *
      * @param analysisWishes
      * @param message
      */
-    private void generateWishes(List<NLPAnalysisDTO> analysisWishes, ChristmasMessage message) {
+    private Long generateWishes(List<NLPAnalysisDTO> analysisWishes, ChristmasMessage message) {
         WishListDTO wishListDto = new WishListDTO();
         List<WishDTO> wishes = new ArrayList<>();
         wishListDto.setWishes(wishes);
@@ -175,7 +208,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
 
 
 
-        wishlistService.saveWishList(wishListDto, message.getId());
+        return wishlistService.saveWishList(wishListDto, message.getId());
     }
 
     /**
@@ -221,6 +254,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
      * @param message
      */
     private void requestManualAssessment(ChristmasMessage message) {
+
     }
 
 
@@ -403,6 +437,44 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
             }
         }
 
+    }
+
+
+
+    @Bean
+    public Connector analyzeChristmasMessageConnector() {
+        return integrationContext -> {
+            Map<String, Object> inBoundVariables = integrationContext.getInBoundVariables();
+            Long messageID = (Long) inBoundVariables.get("id");
+
+            AnalysisResultDTO result = analyseMessage(messageID);
+
+            if (result.getNumberOfFeedbackFound() > 0) {
+
+                integrationContext.addOutBoundVariable("sendFeedbackMail",true);
+            } else {
+
+                integrationContext.addOutBoundVariable("sendFeedbackMail", false);
+            }
+
+            if (result.getNumberOfWishesFound() > 0) {
+                integrationContext.addOutBoundVariable("wishListID",result.getWishListID());
+                integrationContext.addOutBoundVariable("sendWishMail",true);
+            } else {
+
+                integrationContext.addOutBoundVariable("sendWishMail", false);
+            }
+
+            if (result.getNumberOfFeedbackFound() == 0 && result.getNumberOfWishesFound() == 0) {
+
+                integrationContext.addOutBoundVariable("sendManualAnalysisMail",true);
+            } else {
+
+                integrationContext.addOutBoundVariable("sendManualAnalysisMail", false);
+            }
+
+            return integrationContext;
+        };
     }
 
 }

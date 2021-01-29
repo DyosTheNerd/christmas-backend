@@ -49,4 +49,11 @@ public class WishListController {
         wishlistService.saveWishList(wishList, christmasMessageID);
     }
 
+    @GetMapping("/christmasMessages/{wishListID}/wishList/")
+    public WishListDTO getWishListForChristmasMessage(@PathVariable(name="wishListID")Long wishListID) {
+
+        return wishlistService.getWishListByChristmasMessageID(wishListID);
+    }
+
+
 }

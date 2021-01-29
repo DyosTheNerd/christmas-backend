@@ -1,13 +1,9 @@
 package jp.co.axa.apidemo.dto;
 
-import jp.co.axa.apidemo.enums.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 
 public class ChristmasMessageDTO {
 
@@ -30,5 +26,6 @@ public class ChristmasMessageDTO {
 
     @Getter
     @Setter
-    private TaskStatus state;
+    private Long wishListID;
+
 }

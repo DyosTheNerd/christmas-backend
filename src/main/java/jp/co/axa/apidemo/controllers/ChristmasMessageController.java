@@ -26,6 +26,7 @@ public class ChristmasMessageController {
 
     @GetMapping("/christmasMessages/{messageID}")
     public ChristmasMessage getChristmasMessage(@PathVariable(name="messageID")Long messageID) {
+
         return christmasMessageService.getChristmasMessage(messageID);
     }
 
@@ -35,8 +36,8 @@ public class ChristmasMessageController {
     }
 
     @GetMapping("/christmasMessages/{messageID}/analysis")
-    public List<String> getChristmasMessageAnalysis(@PathVariable(name="messageID")Long messageID) {
-        return christmasMessageAnalysisService.analyseMessage(messageID);
+    public List<String> getBasicMessageAnalysis(@PathVariable(name="messageID")Long messageID) {
+        return christmasMessageAnalysisService.getBasicMessageAnalysis(messageID);
     }
 
 

@@ -1,19 +1,16 @@
 package jp.co.axa.apidemo.services;
 
 
-import javafx.concurrent.Task;
 import jp.co.axa.apidemo.dto.ChristmasMessageDTO;
 import jp.co.axa.apidemo.entities.ChristmasMessage;
-
-import jp.co.axa.apidemo.enums.TaskStatus;
-import jp.co.axa.apidemo.enums.TaskType;
+import jp.co.axa.apidemo.events.ChristmasMessageCreatedEvent;
 import jp.co.axa.apidemo.exceptions.ResourceNotFoundException;
 import jp.co.axa.apidemo.repositories.ChristmasMessageRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -23,26 +20,28 @@ public class ChristmasMessageServiceImpl implements ChristmasMessageService{
     ChristmasMessageRepository christmasMessageRepository;
 
     @Autowired
-    ElvenTaskService elvenTaskService;
+    ModelMapper modelMapper;
 
     @Autowired
-    ModelMapper modelMapper;
+    ApplicationEventPublisher applicationEventPublisher;
 
 
     public Long saveChristmasMessage(ChristmasMessageDTO chrMessage){
 
         ChristmasMessage incomingMessage = modelMapper.map(chrMessage,ChristmasMessage.class);
 
-        incomingMessage.setState(TaskStatus.OPEN);
-
         ChristmasMessage persistedObject = christmasMessageRepository.saveAndFlush(incomingMessage);
 
-        elvenTaskService.createElvenTask(TaskType.READING,persistedObject.getId());
+        chrMessage.setId(persistedObject.getId());
+
+        ChristmasMessageCreatedEvent event = new ChristmasMessageCreatedEvent(this, chrMessage);
+
+
+
+        applicationEventPublisher.publishEvent(event);
+
 
         return persistedObject.getId();
-
-
-
     }
 
     @Override

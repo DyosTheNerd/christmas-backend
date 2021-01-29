@@ -2,6 +2,7 @@ package jp.co.axa.apidemo.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,13 +23,7 @@ public class WishList {
     @JoinColumn(name = "ORIGINAL_MESSAGE_ID", referencedColumnName = "ID")
     /* each wishlist has an original message it was created of.*/
     private ChristmasMessage originalChristmasMessage;
-
-
-    @Getter
-    @Setter
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "APPROVAL_ID", referencedColumnName = "ID")
-    private ElvenTask approvalRequest;
+    
 
     @Getter
     @Setter
