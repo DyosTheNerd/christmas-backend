@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * This Service Layer Class handles the feedback entries.
+ */
 @Service
 public class ChildrenFeedbackServiceImpl implements ChildrenFeedbackService {
 
@@ -31,7 +34,7 @@ public class ChildrenFeedbackServiceImpl implements ChildrenFeedbackService {
     ChildrenFeedbackRepository feedbackRepos;
 
     @Autowired
-    private TaskService taskService;
+    TaskService taskService;
 
 
 
