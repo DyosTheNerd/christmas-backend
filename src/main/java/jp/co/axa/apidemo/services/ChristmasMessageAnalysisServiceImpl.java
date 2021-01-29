@@ -143,12 +143,12 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
             sentenceList.add(category + ": " + sentence);
         }
 
-        Long wishlistID = generateWishes(analysisWishes, message);
+        Long wishListID = generateWishes(analysisWishes, message);
 
         generateFeedback(analysisFeedback, message);
 
 
-        return new AnalysisResultDTO(messageID,analysisFeedback.size(),analysisWishes.size(),wishlistID);
+        return new AnalysisResultDTO(messageID,analysisFeedback.size(),analysisWishes.size(),wishListID);
     }
 
     /**
@@ -182,7 +182,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
             boolean firstVerb = false;
             boolean extract = false;
             for (int i = 0; i < wishSentence.getTags().length; i ++){
-                if (tags[i] == "."){
+                if (tags[i].equals(".")){
                     continue;
                 }
                 if (firstVerb && (tags[i].startsWith("DT")||tags[i].startsWith("NN"))) {
@@ -201,7 +201,9 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
             aWish.setSubject(wishBuilder.toString());
             aWish.setQuantity(1);
             aWish.setWishType(WishType.PHYSICAL);
-            wishes.add(aWish);
+            if (extract) {
+                wishes.add(aWish);
+            }
 
 
         }
@@ -249,13 +251,6 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
     }
 
 
-    /**
-     * This method starts the process of manual analysis.
-     * @param message
-     */
-    private void requestManualAssessment(ChristmasMessage message) {
-
-    }
 
 
     /**
@@ -449,7 +444,10 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
 
             AnalysisResultDTO result = analyseMessage(messageID);
 
-            if (result.getNumberOfFeedbackFound() > 0) {
+            boolean hasWishlist = (result.getWishListID() != 0l);
+            boolean hasFeedback = (result.getNumberOfFeedbackFound() > 0);
+
+            if (hasFeedback) {
 
                 integrationContext.addOutBoundVariable("sendFeedbackMail",true);
             } else {
@@ -457,7 +455,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
                 integrationContext.addOutBoundVariable("sendFeedbackMail", false);
             }
 
-            if (result.getNumberOfWishesFound() > 0) {
+            if (hasWishlist) {
                 integrationContext.addOutBoundVariable("wishListID",result.getWishListID());
                 integrationContext.addOutBoundVariable("sendWishMail",true);
             } else {
@@ -465,7 +463,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
                 integrationContext.addOutBoundVariable("sendWishMail", false);
             }
 
-            if (result.getNumberOfFeedbackFound() == 0 && result.getNumberOfWishesFound() == 0) {
+            if (!hasFeedback && !hasWishlist) {
 
                 integrationContext.addOutBoundVariable("sendManualAnalysisMail",true);
             } else {

@@ -7,8 +7,6 @@ import jp.co.axa.apidemo.entities.ChildrenFeedback;
 import jp.co.axa.apidemo.events.ManualTaskCompletedEvent;
 import jp.co.axa.apidemo.exceptions.ResourceNotFoundException;
 import jp.co.axa.apidemo.repositories.ChildrenFeedbackRepository;
-import org.activiti.api.process.runtime.ProcessRuntime;
-import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +29,6 @@ public class ChildrenFeedbackServiceImpl implements ChildrenFeedbackService {
 
 
     @Autowired
-    ApplicationEventPublisher applicationEventPublisher;
-
-    @Autowired
     ChristmasMessageService messageService;
 
     @Autowired
@@ -42,8 +37,7 @@ public class ChildrenFeedbackServiceImpl implements ChildrenFeedbackService {
     @Autowired
     private TaskService taskService;
 
-    @Autowired
-    private ProcessRuntime processRuntime;
+
 
     @Override
     public void saveChildrenFeedback(ChildrenFeedbackListDTO feedbackDTO) {
@@ -67,11 +61,7 @@ public class ChildrenFeedbackServiceImpl implements ChildrenFeedbackService {
 
     @Override
     public void saveChildrenFeedbackWithTask(ChildrenFeedbackListDTO feedbackDTO, Long messageID) {
-        List<Task> openTasks = taskService.createTaskQuery().processDefinitionKey("christmasProcess_1").processVariableValueEquals("id",messageID).taskName("Enter Feedback Manually").active().list();
-        if(openTasks.size() != 1){
-            logger.info("No Task found, returning");
-            throw new ResourceNotFoundException(messageID, "FeedbackAnalysisTask");
-        }
+        Task task = taskService.getTaskForTypeAndMessageID(messageID,"Enter Feedback Manually");
 
         boolean feedbackFound = (feedbackDTO != null && feedbackDTO.getFeedback() != null && feedbackDTO.getFeedback().size() > 0);
 
@@ -85,11 +75,6 @@ public class ChildrenFeedbackServiceImpl implements ChildrenFeedbackService {
         Map<String, Object> taskVariables = new HashMap<>();
         taskVariables.put("manualFeedbackFound", feedbackFound);
 
-        ManualTaskDetailsDTO detailsDTO = new ManualTaskDetailsDTO();
-        detailsDTO.setMessageID(messageID);
-        detailsDTO.setResultParams(taskVariables);
-        detailsDTO.setTaskID(openTasks.get(0).getId());
-        ManualTaskCompletedEvent event = new ManualTaskCompletedEvent(this, detailsDTO);
-        applicationEventPublisher.publishEvent(event);
+        taskService.completeTask(task.getId(),messageID,taskVariables);
     }
 }

@@ -1,7 +1,6 @@
 package jp.co.axa.apidemo.services;
 
 import jp.co.axa.apidemo.dto.WishListDTO;
-import jp.co.axa.apidemo.entities.WishList;
 
 import java.io.OutputStream;
 
@@ -22,4 +21,7 @@ public interface WishlistService {
     Long saveWishList(WishListDTO wishListDTO, Long christmasMessageID);
 
     Long findWishlistIDByMessageID(Long messageID);
+
+
+    Long saveWishListWithTask(WishListDTO wishListDTO, Long messageID);
 }

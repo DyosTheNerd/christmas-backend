@@ -1,0 +1,1027 @@
+{
+	"info": {
+		"_postman_id": "cbd11d9f-897c-4a2d-a325-1b0a63e79a14",
+		"name": "ChristmasApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test1-AutoFBFalseWLFalse-AnaFBTrueWLFalse",
+			"item": [
+				{
+					"name": "Create Message No Feedback No Wish.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"test-AutoFBFalseWLFalse-AnaFBTrueWLFalse-messageID\",responseBody);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages?extChildID=123&externalId=123&text=123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages"
+							],
+							"query": [
+								{
+									"key": "extChildID",
+									"value": "123"
+								},
+								{
+									"key": "externalId",
+									"value": "123"
+								},
+								{
+									"key": "text",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Manual Feedback",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "feedback[0].textExtract",
+									"value": "textextract",
+									"type": "text"
+								},
+								{
+									"key": "feedback[0].sentiment",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "feedback[0].id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLFalse-AnaFBTrueWLFalse-messageID}}/feedback/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLFalse-AnaFBTrueWLFalse-messageID}}",
+								"feedback",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "123",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "123",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFeedback",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"has one feedback\", function() { \r",
+									"    pm.expect(jsonData.feedback).to.be.an('array').that.has.length(1); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"feedback text correct\", function() { \r",
+									"    pm.expect(jsonData.feedback[0].textExtract).to.be.a('string').that.equals('textextract'); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"sentiment correct\", function() { \r",
+									"    pm.expect(jsonData.feedback[0].sentiment).to.be.a('string').that.equals('123');\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 10000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLFalse-AnaFBTrueWLFalse-messageID}}/feedback/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLFalse-AnaFBTrueWLFalse-messageID}}",
+								"feedback",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This test case test the system for a message for which the automated analysis finds neither feedback nor a wishlist. The analysis team then adds feedback manually and adds no wish list."
+		},
+		{
+			"name": "test2-AutoFBFalseWLFalse-AnaFBFalseWLFalse",
+			"item": [
+				{
+					"name": "Create Message No Feedback No Wish.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID\",responseBody);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages?extChildID=123&externalId=123&text=123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages"
+							],
+							"query": [
+								{
+									"key": "extChildID",
+									"value": "123"
+								},
+								{
+									"key": "externalId",
+									"value": "123"
+								},
+								{
+									"key": "text",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Manual Feedback",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 10000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}/feedback/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}",
+								"feedback",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Wishlist Manually Empty",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}/wishList/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}",
+								"wishList",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFeedback",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"has empty feedback\", function() { \r",
+									"    pm.expect(jsonData.feedback).to.be.an('array').that.is.empty; \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}/feedback/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}",
+								"feedback",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get empty wishlist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"has Exception\", function() { \r",
+									"    pm.expect(jsonData.exception).to.be.not.null; \r",
+									"});\r",
+									"pm.test(\"Resource Exception\", function() { \r",
+									"   pm.expect(jsonData.exception.startsWith(\"Resource of type\")).to.be.true;\r",
+									"});\r",
+									"  pm.test(\"about task\", function() { \r",
+									"   pm.expect(jsonData.exception.includes(\"WishList\")).to.be.true;\r",
+									"});  "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}/wishList/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}",
+								"wishList",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manual Feedback Duplicate Fails due to no task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(responseBody);\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"has Exception\", function() { \r",
+									"    pm.expect(jsonData.exception).to.be.not.null; \r",
+									"});\r",
+									"pm.test(\"Resource Exception\", function() { \r",
+									"   pm.expect(jsonData.exception.startsWith(\"Resource of type\")).to.be.true;\r",
+									"});\r",
+									"  pm.test(\"about task\", function() { \r",
+									"   pm.expect(jsonData.exception.includes(\"Analysis\")).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}/feedback/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}",
+								"feedback",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manual Wishlist Duplicate Fails Due to no task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(responseBody);\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"has Exception\", function() { \r",
+									"    pm.expect(jsonData.exception).to.be.not.null; \r",
+									"});\r",
+									"pm.test(\"Resource Exception\", function() { \r",
+									"   pm.expect(jsonData.exception.startsWith(\"Resource of type\")).to.be.true;\r",
+									"});\r",
+									"  pm.test(\"about task\", function() { \r",
+									"   pm.expect(jsonData.exception.includes(\"Analysis\")).to.be.true;\r",
+									"});  \r",
+									"   "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}/wishList/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLFalse-AnaFBFalseWLFalse-messageID}}",
+								"wishList",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test3-AutoFBtrueWLFalse",
+			"item": [
+				{
+					"name": "Create Message With Feedback No Wish",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"test-AutoFBTrueWLFalse-messageID\",responseBody);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages?extChildID=123&externalId=123&text=Hi Santa. I liked your services very much. Thank you for helping all the children. Best wishes. Sarah.",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages"
+							],
+							"query": [
+								{
+									"key": "extChildID",
+									"value": "123"
+								},
+								{
+									"key": "externalId",
+									"value": "123"
+								},
+								{
+									"key": "text",
+									"value": "Hi Santa. I liked your services very much. Thank you for helping all the children. Best wishes. Sarah."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFeedback",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 10000);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"at least some automatic feedback\", jsonData.feedback == true && jsonData.feedback.length > 0);\r",
+									"\r",
+									"pm.test(\"has one feedback\", function() { \r",
+									"    pm.expect(jsonData.feedback).to.be.an('array').that.has.length().greaterThan(1); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"feedback text is there\", function() { \r",
+									"    pm.expect(jsonData.feedback[0].textExtract).to.be.a('string'); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"sentiment is there\", function() { \r",
+									"    pm.expect(jsonData.feedback[0].sentiment).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBTrueWLFalse-messageID}}/feedback/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBTrueWLFalse-messageID}}",
+								"feedback",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test4-AutoFBFalseWLTrue",
+			"item": [
+				{
+					"name": "Create Message No Feedback With Wish",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"test-AutoFBFalseWLTrue-messageID\",responseBody);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages?extChildID=123&externalId=123&text=Hi Santa. I would like to get a toy soldier. Sam.",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages"
+							],
+							"query": [
+								{
+									"key": "extChildID",
+									"value": "123"
+								},
+								{
+									"key": "externalId",
+									"value": "123"
+								},
+								{
+									"key": "text",
+									"value": "Hi Santa. I would like to get a toy soldier. Sam."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFeedbackEmpty",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"has empty feedback\", function() { \r",
+									"    pm.expect(jsonData.feedback).to.be.an('array').that.is.empty; \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLTrue-messageID}}/feedback/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLTrue-messageID}}",
+								"feedback",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Wishlist by messageid",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.globals.set(\"test-AutoFBFalseWLTrue-wishlistID\",jsonData.id);\r",
+									"\r",
+									"pm.test(\"has a wishlist\", function() { \r",
+									"    pm.expect(jsonData.wishes).to.be.an('array').that.is.not.empty; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"has a subject\", function() { \r",
+									"    pm.expect(jsonData.wishes[0].subject).to.be.a('string').that.is.not.empty; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"has a subject\", function() { \r",
+									"    pm.expect(jsonData.wishes[0].wishType).to.be.a('string').that.is.not.empty; \r",
+									"});\r",
+									"\r",
+									"pm.test(\"has a subject\", function() { \r",
+									"    pm.expect(jsonData.wishes[0].quantity).to.be.a('number'); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test-AutoFBFalseWLTrue-messageID}}/wishList/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test-AutoFBFalseWLTrue-messageID}}",
+								"wishList",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Wishlist by wishlist id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/wishLists/{{test-AutoFBFalseWLTrue-wishlistID}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"wishLists",
+								"{{test-AutoFBFalseWLTrue-wishlistID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue",
+			"item": [
+				{
+					"name": "Create Message No Feedback With Wish Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-messageID\",responseBody);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages?extChildID=123&externalId=123&text=Hi Santa. A Drum Set would be soo cool. Thanks, Timmy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages"
+							],
+							"query": [
+								{
+									"key": "extChildID",
+									"value": "123"
+								},
+								{
+									"key": "externalId",
+									"value": "123"
+								},
+								{
+									"key": "text",
+									"value": "Hi Santa. A Drum Set would be soo cool. Thanks, Timmy"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFeedbackEmpty",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(function(){}, 5000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-messageID}}/feedback/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-messageID}}",
+								"feedback",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Wishlist Manually",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "wishes[0].subject",
+									"value": "drum set",
+									"type": "text"
+								},
+								{
+									"key": "wishes[0].wishType",
+									"value": "PHYSICAL",
+									"type": "text"
+								},
+								{
+									"key": "wishes[0].quantity",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-messageID}}/wishList/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-messageID}}",
+								"wishList",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Wishlist by messageid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.globals.set(\"test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-wishlistID\",jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/christmasMessages/{{test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-messageID}}/wishList/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"christmasMessages",
+								"{{test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-messageID}}",
+								"wishList",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Document",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"returns a pdf \", function () {pm.expect(pm.response.headers.get(\"content-type\")).to.be.a(\"string\").and.equal(\"application/pdf\");})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/wishlists/{{test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-wishlistID}}/wishlistdocument",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"wishlists",
+								"{{test5-AutoFBFalseWLFalse-AnaFBFalseWLTrue-wishlistID}}",
+								"wishlistdocument"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

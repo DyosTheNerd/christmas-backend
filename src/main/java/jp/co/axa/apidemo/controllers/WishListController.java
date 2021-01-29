@@ -2,15 +2,14 @@ package jp.co.axa.apidemo.controllers;
 
 
 import jp.co.axa.apidemo.dto.WishListDTO;
-import jp.co.axa.apidemo.entities.ChristmasMessage;
-import jp.co.axa.apidemo.entities.WishList;
 import jp.co.axa.apidemo.services.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 
 
 
@@ -22,8 +21,8 @@ public class WishListController {
     WishlistService wishlistService;
 
 
-    @GetMapping("/wishlist/{wishlistID}/wishlistdocument")
-    public void getWishList(@PathVariable(name="wishlistID")Long wishListID, HttpServletResponse response) {
+    @GetMapping("/wishlists/{wishListID}/wishlistdocument")
+    public void getWishList(@PathVariable(name="wishListID")Long wishListID, HttpServletResponse response) {
 
         response.setContentType(MediaType.APPLICATION_PDF_VALUE);
         response.setHeader("Content-Disposition","attachment:filename=wishlistdocument.pdf");
@@ -37,7 +36,7 @@ public class WishListController {
     }
 
 
-    @GetMapping("/wishLists/{wishListID}")
+    @GetMapping("/wishlists/{wishListID}")
     public WishListDTO getWishList(@PathVariable(name="wishListID")Long wishListID) {
 
         return wishlistService.getWishList(wishListID);
@@ -46,13 +45,13 @@ public class WishListController {
     @PostMapping("/christmasMessages/{christmasMessageID}/wishList/")
     public void saveChristmasMessage(WishListDTO wishList, @PathVariable(name="christmasMessageID") Long christmasMessageID){
 
-        wishlistService.saveWishList(wishList, christmasMessageID);
+        wishlistService.saveWishListWithTask(wishList, christmasMessageID);
     }
 
-    @GetMapping("/christmasMessages/{wishListID}/wishList/")
-    public WishListDTO getWishListForChristmasMessage(@PathVariable(name="wishListID")Long wishListID) {
+    @GetMapping("/christmasMessages/{christmasMessageID}/wishList/")
+    public WishListDTO getWishListForChristmasMessage(@PathVariable(name="christmasMessageID")Long christmasMessageID) {
 
-        return wishlistService.getWishListByChristmasMessageID(wishListID);
+        return wishlistService.getWishListByChristmasMessageID(christmasMessageID);
     }
 
 
