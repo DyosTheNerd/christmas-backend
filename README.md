@@ -1,52 +1,44 @@
-### How to use this spring-boot project
+### Christmas Messages backend application
 
-- Install packages with `mvn package`
-- Run `mvn spring-boot:run` for starting the application (or use your IDE)
+*Storytime*
 
-Application (with the embedded H2 database) is ready to be used ! You can access the url below for testing it :
+Santa: Our new Webpage is live, so Children all around the world can send us their Christmas wishes at https://lucky-successful-arrhinceratops.glitch.me/ 
 
-- Swagger UI : http://localhost:8080/swagger-ui.html
-- H2 UI : http://localhost:8080/h2-console
+Elf: But, what happens to the messages that children send to our Frontend, Santa?
 
-> Don't forget to set the `JDBC URL` value as `jdbc:h2:mem:testdb` for H2 UI.
+Santa: We store them in a database, and I get mails about the wishes inside.
 
+Elf: Shouldn't we start to prepare the packages somehow?
 
+Santa: Good idea. Lets build an app for that.  
 
-### Instructions
+*and so to process the messages efficiently the elves built a small app...*
 
-- download the zip file of this project
-- create a repository in your own github named 'java-challenge'
-- clone your repository in a folder on your machine
-- extract the zip file in this folder
-- commit and push
+### Santas IT Infrastructure
 
-- Enhance the code in any ways you can see, you are free! Some possibilities:
-  - Add tests
-  - Change syntax
-  - Protect controller end points
-  - Add caching logic for database calls
-  - Improve doc and comments
-  - Fix any bug you might find
-- Edit readme.md and add any comments. It can be about what you did, what you would have done if you had more time, etc.
-- Send us the link of your repository.
+![Overall Architecture](./architecture.png)
 
-#### Restrictions
-- use java 8
+This project implements the Christmas Wishes Backend application.
+
+This projects main goal is to analyse the messages, and generate more readable wish list documents from the incoming messages, so the elves can assemble the christmas presents more efficiently.   
+This Spring boot backend exposes and API on /christmasMessages/ which starts a business process around the Christmas letters published by the frontend application.
+  
+There are 3 additional major components
+* OpenNLP: To analyse the content and extract wishes and feedback for Santa
+* activiti: To request a manual analysis, and send tasks to the packaging team
+* thymeleaf: To provide efficient wish list documents as pdf files.
 
 
-#### What we will look for
-- Readability of your code
-- Documentation
-- Comments in your code 
-- Appropriate usage of spring boot
-- Appropriate usage of packages
-- Is the application running as expected
-- No performance issues
+The BPM Process implemented with activiti is this one. (src/main/resources/processes/ChristmasProcess.bpmn) 
+![Implemtented BPM Process](./process.png)
 
-#### Your experience in Java
+activiti sends emails to the corresponding teams whenever tasks for them are to be done. The emails contain information on what to do. The tasks get closed, when the corresponding API calls are performed.
+The postman collection in /postman/ gives a good hint on how the processes might look like.
 
-Please let us know more about your Java experience in a few sentences. For example:
+Be aware that currently several things are still missing for the project and the overall architecture that might come in future upgrades:
+* The wish list document to contain package labels with sender and receiver information (requires api call to get receiver info)
+* A working middleware component forwarding messages from the Node Frontend.
+* Closing of wish lists once everything has been done, and forwarding that to the Frontend, to have current information in the mail that Santa gets. 
+* Deployment of a production environment and integration with Node Frontend.  
 
-- I have 3 years experience in Java and I started to use Spring Boot from last year
-- I'm a beginner and just recently learned Spring Boot
-- I know Spring Boot very well and have been using it for many years
+
