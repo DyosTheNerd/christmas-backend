@@ -20,15 +20,15 @@ public class ModelTrainer {
 
     public static final String sentenceCategorizationTestDataPath = "openNLPTestData//categorization.txt";
 
-    public static final String sentenceCategorizationModelPath = "openNLPmodels//categories.bin";
+    public static final String sentenceCategorizationModelPath = "opennlpmodels//categories.bin";
 
     public static final String lemmatizerDataPath = "openNLPTestData//en-lemmatizer.txt";
 
-    public static final String lemmatizerModelPath = "openNLPmodels//en-lemmatizer.bin";
+    public static final String lemmatizerModelPath = "opennlpmodels//en-lemmatizer.bin";
 
     public static final String sentimentsDataPath = "openNLPTestData//sentiments.txt";
 
-    public static final String sentimentsModelPath = "openNLPmodels//sentiments.bin";
+    public static final String sentimentsModelPath = "opennlpmodels//sentiments.bin";
 
 
 

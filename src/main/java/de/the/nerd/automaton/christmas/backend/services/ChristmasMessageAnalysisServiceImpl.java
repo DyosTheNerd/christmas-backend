@@ -358,7 +358,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
     private void ensureSetup(){
         if (posTaggerME == null){
             try {
-                ClassPathResource cpResource = new ClassPathResource("openNLPmodels//en-pos-maxent.bin");
+                ClassPathResource cpResource = new ClassPathResource("opennlpmodels//en-pos-maxent.bin");
                 // Initialize POS tagger tool
                 posTaggerME = new POSTaggerME(new POSModel(cpResource.getInputStream()));
             } catch (FileNotFoundException e) {
@@ -371,7 +371,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
         if (lemmatizerME == null) {
 
             try {
-                ClassPathResource cpResource = new ClassPathResource("openNLPmodels//en-lemmatizer.bin");
+                ClassPathResource cpResource = new ClassPathResource("opennlpmodels//en-lemmatizer.bin");
 
 
                 // Tag sentence.
@@ -389,7 +389,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
         if (categorizerME == null){
 
             try {
-                ClassPathResource cpResource = new ClassPathResource("openNLPmodels//categories.bin");
+                ClassPathResource cpResource = new ClassPathResource("opennlpmodels//categories.bin");
                  categorizerME = new DocumentCategorizerME(new DoccatModel(cpResource.getInputStream()));
                 // Get best possible category.
 
@@ -401,7 +401,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
         if (sentimentME == null){
 
             try {
-                ClassPathResource cpResource = new ClassPathResource("openNLPmodels//sentiments.bin");
+                ClassPathResource cpResource = new ClassPathResource("opennlpmodels//sentiments.bin");
                 sentimentME = new DocumentCategorizerME(new DoccatModel(cpResource.getInputStream()));
                 // Get best possible category.
 
@@ -414,7 +414,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
 
         if (tokenizerME == null){
             try {
-                ClassPathResource cpResource = new ClassPathResource("openNLPmodels//en-token.bin");
+                ClassPathResource cpResource = new ClassPathResource("opennlpmodels//en-token.bin");
                 // Initialize tokenizer tool
                 tokenizerME = new TokenizerME(new TokenizerModel(cpResource.getInputStream()));
 
@@ -428,7 +428,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
 
         if (sentenceDetectorME == null) {
             try {
-                ClassPathResource cpResource = new ClassPathResource("openNLPmodels//en-sent.bin");
+                ClassPathResource cpResource = new ClassPathResource("opennlpmodels//en-sent.bin");
 
                 sentenceDetectorME = new SentenceDetectorME(new SentenceModel(cpResource.getInputStream()));
 
