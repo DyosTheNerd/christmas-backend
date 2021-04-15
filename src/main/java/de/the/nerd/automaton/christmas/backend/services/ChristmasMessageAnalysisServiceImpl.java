@@ -428,7 +428,7 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
 
         if (sentenceDetectorME == null) {
             try {
-                ClassPathResource cpResource = new ClassPathResource("openNLPmodels//en-sent.bin");
+                ClassPathResource cpResource = new ClassPathResource("openNLPmodels/en-sent.bin");
 
                 sentenceDetectorME = new SentenceDetectorME(new SentenceModel(cpResource.getInputStream()));
 
