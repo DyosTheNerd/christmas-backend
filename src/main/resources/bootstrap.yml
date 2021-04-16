@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    gcp:
+      secretmanager:
+        secret-name-prefix: sm://
+        enabled: true
+        bootstrap:
+          enabled: true

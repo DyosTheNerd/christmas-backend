@@ -1,0 +1,4 @@
+spring:
+  activiti:
+    mail-server-password: {$sm://mail-server-password}
+    mail-server-user-name: {$sm://mail-server-user-name}

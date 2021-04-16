@@ -1,5 +1,6 @@
 package de.the.nerd.automaton.christmas.backend.services;
 
+
 import de.the.nerd.automaton.christmas.backend.dto.*;
 import de.the.nerd.automaton.christmas.backend.entities.ChristmasMessage;
 import de.the.nerd.automaton.christmas.backend.enums.WishType;
@@ -17,6 +18,7 @@ import org.activiti.api.process.runtime.connector.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -439,11 +441,26 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
                 e.printStackTrace();
             }
         }
-        
+
         logger.info(env.getProperty("spring.activiti.mail-server-user-name"));
 
 
+        logger.info(env.getProperty("spring.cloud.gcp.secretmanager.enabled"));
+
+
+
+        logger.info(standardProp);
+
+        logger.info(cloudProp);
+
+
+
+
     }
+
+    @Value("spring.activiti.mail-server-user-name") String standardProp;
+
+    @Value("${sm://mail-server-user-name}") String cloudProp;
 
     @Autowired
     private Environment env;
