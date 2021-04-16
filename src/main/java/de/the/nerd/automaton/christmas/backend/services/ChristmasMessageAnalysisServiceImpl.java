@@ -442,28 +442,11 @@ public class ChristmasMessageAnalysisServiceImpl implements ChristmasMessageAnal
             }
         }
 
-        logger.info(env.getProperty("spring.activiti.mail-server-user-name"));
-
-
-        logger.info(env.getProperty("spring.cloud.gcp.secretmanager.enabled"));
-
-
-
-        logger.info(standardProp);
-
-        logger.info(cloudProp);
 
 
 
 
     }
-
-    @Value("spring.activiti.mail-server-user-name") String standardProp;
-
-    @Value("${sm://mail-server-user-name}") String cloudProp;
-
-    @Autowired
-    private Environment env;
 
 
 
