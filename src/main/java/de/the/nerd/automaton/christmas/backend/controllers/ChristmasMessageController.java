@@ -1,10 +1,13 @@
 package de.the.nerd.automaton.christmas.backend.controllers;
 
 import de.the.nerd.automaton.christmas.backend.dto.ChristmasMessageDTO;
+import de.the.nerd.automaton.christmas.backend.services.LineRequestAuthenticationServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import de.the.nerd.automaton.christmas.backend.entities.ChristmasMessage;
 import de.the.nerd.automaton.christmas.backend.services.ChristmasMessageAnalysisService;
 import de.the.nerd.automaton.christmas.backend.services.ChristmasMessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +27,7 @@ public class ChristmasMessageController {
 
     @Autowired
     ChristmasMessageAnalysisService christmasMessageAnalysisService;
+
 
 
     @Operation(summary = "Retrieve the an existing message.", description = "If the message exists, " +
