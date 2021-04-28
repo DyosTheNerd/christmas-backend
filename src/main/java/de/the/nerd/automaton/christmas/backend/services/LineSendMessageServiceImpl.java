@@ -29,8 +29,8 @@ public class LineSendMessageServiceImpl implements LineSendMessageService{
 
     public static Logger logger = LoggerFactory.getLogger(LineReceiveMessageServiceImpl.class);
 
-    @Value("${line.bot.api.secret}")
-    public String botApiSecret;
+    @Value("${line.bot.api.bearer.token}")
+    public String botApiBearerToken;
 
 
     @Bean
@@ -70,7 +70,7 @@ public class LineSendMessageServiceImpl implements LineSendMessageService{
         // set `accept` header
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
-        headers.setBearerAuth(botApiSecret);
+        headers.setBearerAuth(botApiBearerToken);
 
         // create a post object
 
