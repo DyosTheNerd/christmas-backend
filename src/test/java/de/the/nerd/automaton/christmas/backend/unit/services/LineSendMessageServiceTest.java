@@ -1,10 +1,7 @@
 package de.the.nerd.automaton.christmas.backend.unit.services;
 
 
-import de.the.nerd.automaton.christmas.backend.dto.LineIncomingEventDto;
-import de.the.nerd.automaton.christmas.backend.dto.LineIncomingMessageContentDto;
-import de.the.nerd.automaton.christmas.backend.dto.LineTextResponseAnswerDTO;
-import de.the.nerd.automaton.christmas.backend.dto.LineTextResponseMessageDTO;
+import de.the.nerd.automaton.christmas.backend.dto.*;
 import de.the.nerd.automaton.christmas.backend.services.LineReceiveMessageServiceImpl;
 import de.the.nerd.automaton.christmas.backend.services.LineRequestAuthenticationServiceImpl;
 import de.the.nerd.automaton.christmas.backend.services.LineSendMessageServiceImpl;
@@ -55,7 +52,7 @@ public class LineSendMessageServiceTest {
 
     @Test
     public void testRestTemplateCall(){
-        LineTextResponseMessageDTO message = new LineTextResponseMessageDTO();
+        LineTextResponseDTO message = new LineTextResponseDTO();
 
         doCallRealMethod().when(testableService).sendLineMessage(any());
         testableService.restTemplate = restTemplate;

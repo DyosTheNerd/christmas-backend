@@ -54,13 +54,13 @@ public class LineSendMessageServiceImpl implements LineSendMessageService{
 
             responseDTO.messages.add(sampleResponse);
 
-            sendLineMessage(sampleResponse);
+            sendLineMessage(responseDTO);
 
             return integrationContext;
         };
     }
 
-    public void sendLineMessage(LineTextResponseMessageDTO message){
+    public void sendLineMessage(LineTextResponseDTO message){
         String url = "https://api.line.me/v2/bot/message/reply";
 
         // create headers
@@ -76,7 +76,8 @@ public class LineSendMessageServiceImpl implements LineSendMessageService{
 
 
         // build the request
-        HttpEntity<LineTextResponseMessageDTO> entity = new HttpEntity<>(message, headers);
+        HttpEntity<LineTextResponseDTO> entity = new HttpEntity<>(message, headers);
+
 
         // send POST request
         LineTextResponseAnswerDTO lineResponse  = restTemplate.postForObject(url, entity,LineTextResponseAnswerDTO.class);
