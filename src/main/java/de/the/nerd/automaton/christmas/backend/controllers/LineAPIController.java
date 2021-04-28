@@ -1,8 +1,12 @@
 package de.the.nerd.automaton.christmas.backend.controllers;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.the.nerd.automaton.christmas.backend.dto.ChildrenFeedbackListDTO;
+import de.the.nerd.automaton.christmas.backend.dto.LineIncomingMessageDto;
 import de.the.nerd.automaton.christmas.backend.services.ChildrenFeedbackService;
+import de.the.nerd.automaton.christmas.backend.services.LineReceiveMessageService;
 import de.the.nerd.automaton.christmas.backend.services.LineRequestAuthenticationService;
 import de.the.nerd.automaton.christmas.backend.services.LineRequestAuthenticationServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,11 +33,17 @@ public class LineAPIController {
     @Autowired
     LineRequestAuthenticationService feedbackService;
 
+    @Autowired
+    LineReceiveMessageService receiveMessageService;
+
+    @Autowired
+    ObjectMapper objectMapper;
+
     @Operation(summary = "Create feedback for a message.", description = "Create feedback for a message with given id. " +
             "If no feedback or wishlist is found, the system will request via email for feedback to be amended manually. " +
             "If and only if this happened, calling this method will succeed and amend the feedback.")
     @PostMapping("/chat/line")
-    public  ResponseEntity<String> saveExternalChristmasMessageFeedback(@RequestBody String request, @RequestHeader("x-line-signature") Map<String, String> headers,  @RequestParam Map<String,String> allRequestParams){
+    public  ResponseEntity<String> receiveLineMessageCall(@RequestBody String request, @RequestHeader("x-line-signature") Map<String, String> headers){
 
         String authHeaderContent = feedbackService.getAuthHeaderContent(headers);
 
@@ -43,6 +53,18 @@ public class LineAPIController {
 
         if (!isValidRequest){
 
+            HttpHeaders responseHeaders = new HttpHeaders();
+
+            ResponseEntity responseE = ResponseEntity.badRequest().body("");
+
+            return responseE;
+        }
+
+        try {
+            LineIncomingMessageDto deserializedObj = objectMapper.readValue(request, LineIncomingMessageDto.class);
+            receiveMessageService.receiveMessage(deserializedObj);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
             HttpHeaders responseHeaders = new HttpHeaders();
 
             ResponseEntity responseE = ResponseEntity.badRequest().body("");
