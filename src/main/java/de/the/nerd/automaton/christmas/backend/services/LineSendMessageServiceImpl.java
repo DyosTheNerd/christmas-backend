@@ -44,6 +44,7 @@ public class LineSendMessageServiceImpl implements LineSendMessageService{
             responseDTO.replyToken = messageDtls.replyToken;
 
             logger.info("replying to " + messageDtls.message.text);
+            logger.info("on token " + messageDtls.replyToken);
 
             LineTextResponseMessageDTO sampleResponse = new LineTextResponseMessageDTO();
 
@@ -78,7 +79,8 @@ public class LineSendMessageServiceImpl implements LineSendMessageService{
         // build the request
         HttpEntity<LineTextResponseDTO> entity = new HttpEntity<>(message, headers);
 
-
+        logger.info(entity.toString());
+        logger.info(message.replyToken);
         // send POST request
         LineTextResponseAnswerDTO lineResponse  = restTemplate.postForObject(url, entity,LineTextResponseAnswerDTO.class);
 
